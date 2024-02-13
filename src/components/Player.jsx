@@ -12,6 +12,10 @@ export default function Player() {
   function clickHandler() {
     // Update the state variable enteredPlayerName with the current value of the input element using the useRef.
     setEnteredPlayerName(playerName.current.value);
+
+    // Using the ref (playerName) to directly manipulate the DOM, set the value of the input field to an empty string,
+    // effectively clearing the input field after the player name has been submitted.
+    playerName.current.value = "";
   }
 
   // Render the Player component, providing an input field and a button for setting the player name.
