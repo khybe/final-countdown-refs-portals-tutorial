@@ -1,36 +1,28 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-// Initialize state variables for managing user input and submission status
+// Two-Way-Binding with useRef hook
 export default function Player() {
-  // State variable to store the entered player name
+  // Create a useRef to hold a reference to the input element, enabling direct access to its properties.
+  const playerName = useRef();
+
+  // Create a state variable to hold the entered player name, initializing it with an empty string.
   const [enteredPlayerName, setEnteredPlayerName] = useState("");
-  // State variable to track whether the form has been submitted
-  const [submitted, setSubmitted] = useState(false);
 
-  // Function to handle changes in the input field
-  function changeHandler(event) {
-    // Reset the submission status to false when the input changes
-    setSubmitted(false);
-    // Update the entered player name based on user input
-    setEnteredPlayerName(event.target.value);
-  }
-
-  // Function to handle button click for submitting the form
+  // Define a function that will be triggered when the "Set Name" button is clicked.
   function clickHandler() {
-    // Set the submission status to true when the button is clicked
-    setSubmitted(true);
+    // Update the state variable enteredPlayerName with the current value of the input element using the useRef.
+    setEnteredPlayerName(playerName.current.value);
   }
 
-  // Render the Player component
+  // Render the Player component, providing an input field and a button for setting the player name.
   return (
     <section id="player">
-      {/* Display a welcome message with the entered player name or a default if not submitted */}
-      <h2>Welcome {submitted ? enteredPlayerName : "unknown entity"}</h2>
-      {/* Form for entering player name with input field and submit button */}
+      {/* Display a welcome message with the entered player name or a default "unknown entity" if no name is entered. */}
+      <h2>Welcome {enteredPlayerName || "unknown entity"}</h2>
       <p>
-        {/* Input field for entering the player name, with two-way binding to the state */}
-        <input type="text" onChange={changeHandler} value={enteredPlayerName} />
-        {/* Button to trigger the submission of the form */}
+        {/* Create an input field with a reference to playerName using the useRef hook. */}
+        <input ref={playerName} type="text" />
+        {/* Trigger the clickHandler function when the "Set Name" button is clicked. */}
         <button onClick={clickHandler}>Set Name</button>
       </p>
     </section>
