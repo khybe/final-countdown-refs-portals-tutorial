@@ -1,33 +1,24 @@
 import { useState, useRef } from "react";
 
-// Two-Way-Binding with useRef hook
+/* Player component allows setting and displaying the player name.
+   The useRef hook is used to directly access and manipulate the input field. */
 export default function Player() {
-  // Create a useRef to hold a reference to the input element, enabling direct access to its properties.
-  const playerName = useRef();
+  const playerName = useRef(); // Ref to access the input element directly
+  const [enteredPlayerName, setEnteredPlayerName] = useState(""); // State to store the entered name
 
-  // Create a state variable to hold the entered player name, initializing it with an empty string.
-  const [enteredPlayerName, setEnteredPlayerName] = useState("");
-
-  // Define a function that will be triggered when the "Set Name" button is clicked.
   function clickHandler() {
-    // Update the state variable enteredPlayerName with the current value of the input element using the useRef.
-    setEnteredPlayerName(playerName.current.value);
-
-    // Using the ref (playerName) to directly manipulate the DOM, set the value of the input field to an empty string,
-    // effectively clearing the input field after the player name has been submitted.
-    playerName.current.value = "";
+    setEnteredPlayerName(playerName.current.value); // Set the entered name using the ref
+    playerName.current.value = ""; // Clear the input field using the ref
   }
 
-  // Render the Player component, providing an input field and a button for setting the player name.
   return (
     <section id="player">
-      {/* Display a welcome message with the entered player name or a default "unknown entity" if no name is entered. */}
       <h2>Welcome {enteredPlayerName || "unknown entity"}</h2>
       <p>
-        {/* Create an input field with a reference to playerName using the useRef hook. */}
-        <input ref={playerName} type="text" />
-        {/* Trigger the clickHandler function when the "Set Name" button is clicked. */}
-        <button onClick={clickHandler}>Set Name</button>
+        <input ref={playerName} type="text" />{" "}
+        {/* Ref used to access the input element */}
+        <button onClick={clickHandler}>Set Name</button>{" "}
+        {/* Trigger to set the name */}
       </p>
     </section>
   );
